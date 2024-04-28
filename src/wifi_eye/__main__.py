@@ -1,3 +1,4 @@
+from urllib.parse import unquote
 import os
 import sys
 import time
@@ -43,6 +44,7 @@ def get_online_hosts(stok: str) -> dict[str, dict]:
     result = {}
     for host in hosts:
         h = list(host.values())[0]
+        h["hostname"] = unquote(h["hostname"])
         result[h["mac"]] = h
     return result
 
