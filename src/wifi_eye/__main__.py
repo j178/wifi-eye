@@ -9,7 +9,8 @@ from urllib.parse import unquote
 import requests
 
 BARK_KEY = os.environ["BARK_KEY"]
-PASSWORD = os.environ["PASSWORD"]
+PASSWORD = os.environ["ROUTER_PASSWORD"]
+ROUTER_ADDR = os.environ["ROUTER_ADDR"]
 TICK_INTERVAL = 2000  # 2s
 OFFLINE_TICKS = 100  # 200s
 
@@ -30,7 +31,7 @@ class Error(Exception):
 
 def login(password: str) -> str:
     params = {"method": "do", "login": {"password": password}}
-    resp = session.post("http://192.168.0.1/", json=params, timeout=1)
+    resp = session.post(f"http://{ROUTER_ADDR}/", json=params, timeout=1)
     data = resp.json()
     if data["error_code"] != 0:
         raise Error(data["error_code"], "login error")
@@ -38,7 +39,7 @@ def login(password: str) -> str:
 
 
 def get_online_hosts(stok: str) -> dict[str, dict]:
-    url = f"http://192.168.0.1/stok={stok}/ds"
+    url = f"http://{ROUTER_ADDR}/stok={stok}/ds"
     params = {
         "hosts_info": {"table": "online_host"},
         "network": {"name": "iface_mac"},
