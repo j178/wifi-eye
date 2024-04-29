@@ -68,9 +68,9 @@ def notify(current: list[str], be_online: list[str], be_offline: list[str]) -> N
         if not hosts:
             return
         hosts.sort(key=lambda mac: all_hosts[mac]["ip"])
-        title.append(f"{len(be_online)} 个设备{action}")
-        body.append(f"{len(be_online)} 个设备{action}:")
-        for i, mac in enumerate(be_online, start=1):
+        title.append(f"{len(hosts)} 个设备{action}")
+        body.append(f"{len(hosts)} 个设备{action}:")
+        for i, mac in enumerate(hosts, start=1):
             host = all_hosts[mac]
             body.append(f"{i}. {host['mac']} *{host['ip']}* {host['hostname']}")
 
