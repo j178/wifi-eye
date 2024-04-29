@@ -15,6 +15,7 @@ OFFLINE_TICKS = 100  # 200s
 
 session = requests.Session()
 session.trust_env = False
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 all_hosts: dict[str, dict] = {}
 online_hosts: set[str] = set()
