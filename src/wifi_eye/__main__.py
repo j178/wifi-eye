@@ -1,3 +1,4 @@
+from enum import auto
 import logging
 import os
 import sys
@@ -89,6 +90,7 @@ def run() -> None:
     stok = login(PASSWORD)
 
     last_run = 0
+    auth_fails = 0
     while True:
         now = int(time.monotonic() * 1000)
         if now - last_run < TICK_INTERVAL:
@@ -100,6 +102,9 @@ def run() -> None:
         except Error as e:
             logging.error(f"get online hosts error: {e!r}")
             if e.code == -40401:
+                auth_fails += 1
+                if auth_fails >= 3:
+                    raise
                 stok = login(PASSWORD)
             continue
         except Exception:
